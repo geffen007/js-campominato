@@ -10,56 +10,70 @@
 // con difficoltà 0 => tra 1 e 100
 // con difficoltà 1 =>  tra 1 e 80
 // con difficoltà 2 => tra 1 e 50
-var difficolta = parseInt(prompt("scegli da difficoltà 1 - 2 - 3"));
+var difficolta;
+var max;
 
-var max
-if (difficolta == 1) {
-    max = 100;
-} else if (difficolta == 2) {
-    max = 80;
-} else {
-    max = 50;
+while (difficolta != 1 && difficolta != 2 && difficolta != 3) {
+    difficolta = parseInt(prompt("scegli da difficoltà 1 - 2 - 3"));
+    if (difficolta == 1) {
+        max = 100;
+    } else if (difficolta == 2) {
+        max = 80;
+    } else if (difficolta == 3) {
+        max = 50;
+    } else {
+        alert("perchè devi farmi arrabiare");
+    }
 }
 
-
-
+// inzializziamo un array vuoto e una variabile che andra a formare l'array di volta in volta
 var numbers = [];
 var numbersN;
 
 for (var i = 0; i < 16 ; i++) {
     numbersN = getRandom(max);
+    // se la funzione controllo restituisce true il numero generato andrà a far parte dell'array
     if (controllo(numbersN, numbers)) {
         numbers.push(numbersN);
-    } else {
+    } else { //altrimenti il numero verrà sovrascritto da un altro numero random e il contatore tornerà indietro di 1
         numbersN = getRandom(max);
         i--;
     }
 }
 
-console.log(numbers);
+console.log("i numeri scelti dal pc sono " + numbers); //stampiamo i numeri del pc
 
+// iniziamo un array vuoto per i numeri inseriti dal giocatore
 var arrayUtente = [];
-var punteggio = arrayUtente.length;
 var numeroUtente;
 
-
-while ((punteggio < (max-16)) && controllo(numeroUtente, numbers)) {
+// stavolta usiamo il while e non il for, visto che il ciclo potrebbe interrompersi prima
+while ((arrayUtente.length < (max-16)) && controllo(numeroUtente, numbers)) {
     numeroUtente = parseInt(prompt("inserisci un numero da 1 a " + max ));
     if (controllo(numeroUtente, arrayUtente)) {
         arrayUtente.push(numeroUtente);
+        console.log("i tuoi numero sono i seguenti " + arrayUtente);
     }else {
-        numeroUtente=parseInt(prompt("numero già inserito"))
+        numeroUtente=parseInt(prompt("numero già inserito"));
     }
 }
 
+var punteggio = arrayUtente.length - 1; 
 
-console.log(arrayUtente);
-console.log(punteggio);
+console.log("i tuoi numero sono i seguenti " + arrayUtente);
+console.log("il tuo punteggio è di " + punteggio);
 
-
-
-
-
+if (punteggio > max - 48) {
+    console.log("sei uno sfigato");
+} else if (punteggio > max - 40) {
+    console.log("non sei andato poi cosi male, ma potevi fare di meglio");
+} else if ( punteggio > max-25) {
+    console.log("eri a metà strada");
+} else if (punteggio > max -15) {
+    console.log("mancava poco");
+} else if (punteggio > max - 5) {
+    console.log("per un pelo");
+}
 
 
 
