@@ -10,43 +10,61 @@
 // con difficoltà 0 => tra 1 e 100
 // con difficoltà 1 =>  tra 1 e 80
 // con difficoltà 2 => tra 1 e 50
+var difficolta = parseInt(prompt("scegli da difficoltà 1 - 2 - 3"));
+
+var max
+if (difficolta == 1) {
+    max = 100;
+} else if (difficolta == 2) {
+    max = 80;
+} else {
+    max = 50;
+}
+
 
 
 var numbers = [];
-// numbers.push(getRandom());
 var numbersN;
 
-
 for (var i = 0; i < 16 ; i++) {
-    numbersN = getRandom();
+    numbersN = getRandom(max);
     if (controllo(numbersN, numbers)) {
         numbers.push(numbersN);
     } else {
-        numbersN = getRandom();
+        numbersN = getRandom(max);
         i--;
     }
 }
 
 console.log(numbers);
+
+var arrayUtente = [];
+var punteggio = arrayUtente.length;
 var numeroUtente;
-var punteggio=0;
-
-do {
-    numeroUtente = prompt(" inserisci un numero");
-    console.log("il tuo punteggio è " + punteggio);
-    punteggio++;
-} while (controllo(numeroUtente, numbers));
-
-// var numeroUtente = parseInt(prompt("inserisci un numero"))
 
 
+while ((punteggio < (max-16)) && controllo(numeroUtente, numbers)) {
+    numeroUtente = parseInt(prompt("inserisci un numero da 1 a " + max ));
+    if (controllo(numeroUtente, arrayUtente)) {
+        arrayUtente.push(numeroUtente);
+    }else {
+        numeroUtente=parseInt(prompt("numero già inserito"))
+    }
+}
+
+
+console.log(arrayUtente);
+console.log(punteggio);
 
 
 
 
 
-function getRandom() {
-    number = Math.floor(Math.random() * 100) + 1;
+
+
+
+function getRandom(a) {
+    number = Math.floor(Math.random() * a) + 1;
     return number;
 }
 
