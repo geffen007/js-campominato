@@ -57,7 +57,6 @@ while (arrayUtente.length < max - bombe && trovato == false){
     }
     if (controllo(numeroUtente, numbers)) {
         trovato = true;
-        alert ("HAI PERSO");
     }else if (!controllo(numeroUtente, arrayUtente)) {
         arrayUtente.push(numeroUtente);
     }else {
@@ -65,17 +64,18 @@ while (arrayUtente.length < max - bombe && trovato == false){
     }
 }
 
-var punteggio = arrayUtente.length;
+alert("i numeri scelti dal pc sono " + numbers);
 
-console.log("i numeri scelti dal pc sono " + numbers); //stampiamo i numeri del pc
-console.log("Hai inserito i seguenti numeri " + arrayUtente);
-console.log("il tuo punteggio è di " + punteggio);
 
 if (trovato) {
-    alert("Hai perso con " + punteggio + "tentativi andati bene")
+    alert("l'ultimo numero da te inserito è " + numeroUtente)
+    alert("tutti i numeri inseriti da te che non erano bombe sono " + arrayUtente);
+    alert("Hai perso con " + arrayUtente.length + " tentativi andati bene");
 } else {
-    alert ("HAI VINTO")
+    alert ("HAI VINTO");
 }
+
+
 
 function getRandom(a) {
     return Math.floor(Math.random() * a) + 1;
