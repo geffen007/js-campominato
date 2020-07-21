@@ -14,6 +14,7 @@
 
 var difficolta;
 var max;
+var bombe = 16;
 
 while (difficolta != 1 && difficolta != 2 && difficolta != 3) {
     difficolta = parseInt(prompt("scegli da difficoltà 1 - 2 - 3"));
@@ -34,28 +35,21 @@ while (difficolta != 1 && difficolta != 2 && difficolta != 3) {
     }
 }
 
-// inzializziamo un array vuoto e una variabile che andra a formare l'array di volta in volta
 var numbers = [];
 var numbersN;
 
-while (numbers.length < 16) {
+while (numbers.length < bombe) {
     numbersN = getRandom(max);
     if (!controllo (numbersN, numbers)){
         numbers.push(numbersN);
     }
 }
 
-numbers.sort();
-
-console.log("i numeri scelti dal pc sono " + numbers); //stampiamo i numeri del pc
-
-// iniziamo un array vuoto per i numeri inseriti dal giocatore
 var arrayUtente = [];
 var numeroUtente;
 var trovato = false;
 
-// stavolta usiamo il while e non il for, visto che il ciclo potrebbe interrompersi prima
-while (arrayUtente.length < max - 16 && trovato == false){
+while (arrayUtente.length < max - bombe && trovato == false){
     numeroUtente = parseInt(prompt("inserisci un numero da 1 a " + max ));
 
     while (numeroUtente <= 0 || numeroUtente > max){
@@ -66,7 +60,6 @@ while (arrayUtente.length < max - 16 && trovato == false){
         alert ("HAI PERSO");
     }else if (!controllo(numeroUtente, arrayUtente)) {
         arrayUtente.push(numeroUtente);
-        console.log("i tuoi numero sono i seguenti " + arrayUtente);
     }else {
         alert("numero già inserito, mettine un altro");
     }
@@ -74,7 +67,8 @@ while (arrayUtente.length < max - 16 && trovato == false){
 
 var punteggio = arrayUtente.length;
 
-console.log("i tuoi numero sono i seguenti " + arrayUtente);
+console.log("i numeri scelti dal pc sono " + numbers); //stampiamo i numeri del pc
+console.log("Hai inserito i seguenti numeri " + arrayUtente);
 console.log("il tuo punteggio è di " + punteggio);
 
 if (trovato) {
