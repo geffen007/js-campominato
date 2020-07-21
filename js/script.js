@@ -15,8 +15,10 @@
 var difficolta;
 var max;
 var bombe = 16;
+var lastChance = 0;
+var trovato = false;
 
-while (difficolta != 1 && difficolta != 2 && difficolta != 3) {
+while (difficolta != 1 && difficolta != 2 && difficolta != 3 && lastChance != 3) {
     difficolta = parseInt(prompt("scegli da difficoltà 1 - 2 - 3"));
     if (difficolta == 1 || difficolta == 2 || difficolta == 3){
         switch (difficolta) {
@@ -30,8 +32,18 @@ while (difficolta != 1 && difficolta != 2 && difficolta != 3) {
             max = 50;
                 break;
         }
+    } else if (lastChance==1) {
+        alert("ultima chance, 1, 2 o 3 non è difficile!");
+        lastChance++;
+    } else if (lastChance==2) {
+        alert("ti avevo avvisato");
+        lastChance++;
+        trovato=true;
+        bombe=0;
+
     } else {
         alert("Te lo ripeto, devi mettere un numero tra 1, 2 o 3");
+        lastChance++;
     }
 }
 
@@ -47,7 +59,7 @@ while (numbers.length < bombe) {
 
 var arrayUtente = [];
 var numeroUtente;
-var trovato = false;
+
 
 while (arrayUtente.length < max - bombe && trovato == false){
     numeroUtente = parseInt(prompt("inserisci un numero da 1 a " + max ));
@@ -64,13 +76,15 @@ while (arrayUtente.length < max - bombe && trovato == false){
     }
 }
 
-alert("i numeri scelti dal pc sono " + numbers);
+// alert("i numeri scelti dal pc sono " + numbers);
 
 
-if (trovato) {
+if (trovato && lastChance!=3) {
     alert("l'ultimo numero da te inserito è " + numeroUtente)
     alert("tutti i numeri inseriti da te che non erano bombe sono " + arrayUtente);
     alert("Hai perso con " + arrayUtente.length + " tentativi andati bene");
+} else if (trovato){
+    alert("Hai perso");
 } else {
     alert ("HAI VINTO");
 }
