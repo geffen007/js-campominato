@@ -10,19 +10,27 @@
 // con difficoltà 0 => tra 1 e 100
 // con difficoltà 1 =>  tra 1 e 80
 // con difficoltà 2 => tra 1 e 50
+
+
 var difficolta;
 var max;
 
 while (difficolta != 1 && difficolta != 2 && difficolta != 3) {
     difficolta = parseInt(prompt("scegli da difficoltà 1 - 2 - 3"));
-    if (difficolta == 1) {
-        max = 100;
-    } else if (difficolta == 2) {
-        max = 80;
-    } else if (difficolta == 3) {
-        max = 50;
+    if (difficolta == 1 || difficolta == 2 || difficolta == 3){
+        switch (difficolta) {
+            case 1:
+            max = 100;
+                break;
+            case 2:
+            max = 80;
+                break;
+            case 3:
+            max = 50;
+                break;
+        }
     } else {
-        alert("perchè devi farmi arrabiare");
+        alert("Te lo ripeto, devi mettere un numero tra 1, 2 o 3");
     }
 }
 
@@ -30,64 +38,62 @@ while (difficolta != 1 && difficolta != 2 && difficolta != 3) {
 var numbers = [];
 var numbersN;
 
-for (var i = 0; i < 16 ; i++) {
+while (numbers.length < 16) {
     numbersN = getRandom(max);
-    // se la funzione controllo restituisce true il numero generato andrà a far parte dell'array
-    if (controllo(numbersN, numbers)) {
+    if (!controllo (numbersN, numbers)){
         numbers.push(numbersN);
-    } else { //altrimenti il numero verrà sovrascritto da un altro numero random e il contatore tornerà indietro di 1
-        numbersN = getRandom(max);
-        i--;
     }
 }
+
+numbers.sort();
 
 console.log("i numeri scelti dal pc sono " + numbers); //stampiamo i numeri del pc
 
 // iniziamo un array vuoto per i numeri inseriti dal giocatore
 var arrayUtente = [];
 var numeroUtente;
+var trovato = false;
 
 // stavolta usiamo il while e non il for, visto che il ciclo potrebbe interrompersi prima
-while ((arrayUtente.length < (max-16)) && controllo(numeroUtente, numbers)) {
+while (arrayUtente.length < max - 16 && trovato == false){
     numeroUtente = parseInt(prompt("inserisci un numero da 1 a " + max ));
-    if (controllo(numeroUtente, arrayUtente)) {
+
+    while (numeroUtente <= 0 || numeroUtente > max){
+        numeroUtente = parseInt(prompt("Hai inserito un numero non valido, inserisci un numero da 1 a " + max ));
+    }
+    if (controllo(numeroUtente, numbers)) {
+        trovato = true;
+        alert ("HAI PERSO");
+    }else if (!controllo(numeroUtente, arrayUtente)) {
         arrayUtente.push(numeroUtente);
         console.log("i tuoi numero sono i seguenti " + arrayUtente);
     }else {
-        numeroUtente=parseInt(prompt("numero già inserito"));
+        alert("numero già inserito, mettine un altro");
     }
 }
 
-var punteggio = arrayUtente.length - 1; 
+var punteggio = arrayUtente.length;
 
 console.log("i tuoi numero sono i seguenti " + arrayUtente);
 console.log("il tuo punteggio è di " + punteggio);
 
-if (punteggio > max - 48) {
-    console.log("sei uno sfigato");
-} else if (punteggio > max - 40) {
-    console.log("non sei andato poi cosi male, ma potevi fare di meglio");
-} else if ( punteggio > max-25) {
-    console.log("eri a metà strada");
-} else if (punteggio > max -15) {
-    console.log("mancava poco");
-} else if (punteggio > max - 5) {
-    console.log("per un pelo");
+if (trovato) {
+    alert("Hai perso con " + punteggio + "tentativi andati bene")
+} else {
+    alert ("HAI VINTO")
 }
-
-
 
 function getRandom(a) {
-    number = Math.floor(Math.random() * a) + 1;
-    return number;
+    return Math.floor(Math.random() * a) + 1;
 }
 
-function controllo(num, array) {
-    control = true;
-    for (var i = 0; i < array.length; i++) {
+function controllo (num, array) {
+    var i = 0;
+    while (i < array.length) {
         if (num == array[i]) {
-            control = false;
+            return true;
         }
+        i++;
     }
-    return control;
+    return false;
 }
